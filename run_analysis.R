@@ -13,6 +13,7 @@
 ##
 ##
 
+## Download and unzip data
 download.data <- function() {
   file_url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
   destfile <- "UCI_HAR_Dataset.zip"
@@ -27,14 +28,54 @@ download.data <- function() {
   }
 }
 
-merge_datasets <- function( set_v = c('test','train') ) {
+## Make common directory structure and add initial files
+make.common <- function() {
+  ## Directory "combo" with all the common files:
+  r <- dir.create(path = 'combo', showWarnings = TRUE)
+  
+  ## activity_labels.txt
+  ## features.txt
+  ## features_info.txt
+  file_list <- c('activity_labels.txt', 'features.txt', 'features_info.txt')
+  
+  for( i in seq_along(file_list) ) {
+    path <- file.path('UCI HAR Dataset', file_list[i])
+    file.copy(path, 'combo')
+  }
+  
+  ## Make subdir Inertial_Signals
+  dir.create('Inertial_Signals', showWarnings = TRUE)
+}
+
+## Merge subject_test.txt and subject_train.txt
+merge_subject <- function() {
+  subject_text <- read.table(file.path('UCI HAR Dataset','test','subject_test.txt'))
+  print(subject_text)
+}
+
+## Merge X_test.txt and X_train.txt
+merge_X <- function() {
   
 }
 
-extract_measurement <- function() {
+## Merge y_test.txt and y_train.txt
+merge_y <-function() {
+  
+}
+
+## Merge Inertial Signals files
+## body_acc_x_test.txt with body_acc_x_train.txt
+## etc...
+merge_inertial_signals <- function() {
   
 }
 
 run_analysis <- function() {
   
+  #download.data()
+  make.common()
+  merge_subject()
+  merge_X()
+  merge_y()
+  merge_inertial_signals()
 }
