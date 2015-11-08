@@ -31,7 +31,7 @@ download.data <- function() {
 ## Make common directory structure and add initial files
 make.common <- function() {
   ## Directory "combo" with all the common files:
-  r <- dir.create(path = 'combo', showWarnings = TRUE)
+  dir.create(path = 'combo', showWarnings = TRUE)
   
   ## activity_labels.txt
   ## features.txt
@@ -49,12 +49,30 @@ make.common <- function() {
 
 ## Merge subject_test.txt and subject_train.txt
 merge_subject <- function() {
-  subject_text <- read.table(file.path('UCI HAR Dataset','test','subject_test.txt'))
-  print(subject_text)
+  ## Read in the two files
+  subject_test <- read.table(file.path('UCI HAR Dataset','test','subject_test.txt'))
+  subject_train <- read.table(file.path('UCI HAR Dataset','train','subject_train.txt'))
+  
+  ## Add train onto the end of test
+  max_test <- max(subject_test)
+  subject_train_adjusted <- subject_train + max_test
+  
+  subject_combo <- rbind(subject_test, subject_train_adjusted)
+  save(subject_combo, file = file.path('combo','subject.txt'))
 }
 
 ## Merge X_test.txt and X_train.txt
 merge_X <- function() {
+  ## Read in the two files
+  X_test <- read.table(file.path('UCI HAR Dataset','test','X_test.txt'))
+  X_train <- read.table(file.path('UCI HAR Dataset','train','X_train.txt'))
+  
+  ## Add train onto the end of test
+  max_test <- max(X_test)
+  X_train_adjusted <- X_train + max_test
+  
+  X_combo <- rbind(X_test, X_train_adjusted)
+  save(X_combo, file = file.path('combo','X.txt'))
   
 }
 
