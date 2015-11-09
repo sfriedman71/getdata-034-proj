@@ -58,7 +58,7 @@ merge_subject <- function() {
   subject_train_adjusted <- subject_train + max_test
   
   subject_combo <- rbind(subject_test, subject_train_adjusted)
-  save(subject_combo, file = file.path('combo','subject.txt'))
+  write.table(subject_combo, file = file.path('combo','subject.txt'), row.names = FALSE, col.names = FALSE)
 }
 
 ## Merge X_test.txt and X_train.txt
@@ -71,9 +71,9 @@ merge_X <- function() {
   max_test <- max(X_test)
   X_train_adjusted <- X_train + max_test
   
+  ## This is horribly inefficient. But, it works. Optimize later...
   X_combo <- rbind(X_test, X_train_adjusted)
-  save(X_combo, file = file.path('combo','X.txt'))
-  
+  write.table(X_combo, file = file.path('combo', 'X.txt'), row.names = FALSE, col.names = FALSE)
 }
 
 ## Merge y_test.txt and y_train.txt
