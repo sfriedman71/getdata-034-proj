@@ -58,9 +58,24 @@ merge_subject <- function() {
   subject_train_adjusted <- subject_train + max_test
   
   subject_combo <- rbind(subject_test, subject_train_adjusted)
-  write.table(subject_combo, file = file.path('combo','subject.txt'), row.names = FALSE, col.names = FALSE)
+  target_file <- file.path('combo','subject.txt')
+  write.table(subject_combo, file = target_file, row.names = FALSE, col.names = FALSE)
 }
 
+## Merge y_test.txt and y_train.txt
+merge_y <-function() {
+  ## Read in the two files
+  y_test <- read.table(file.path('UCI HAR Dataset','test','y_test.txt'))
+  y_train <- read.table(file.path('UCI HAR Dataset','train','y_train.txt'))
+  
+  ## Add train onto the end of test
+  y_combo <- rbind(y_test, y_train)
+  
+  target_file <- file.path('combo','y.txt')
+  write.table(y_combo, file = target_file, row.names = FALSE, col.names = FALSE)
+}
+
+## In progress, printing is still fishy
 ## Merge X_test.txt and X_train.txt
 merge_X <- function() {
   ## Read in the two files
@@ -73,13 +88,14 @@ merge_X <- function() {
   
   ## This is horribly inefficient. But, it works. Optimize later...
   X_combo <- rbind(X_test, X_train_adjusted)
-  write.table(X_combo, file = file.path('combo', 'X.txt'), row.names = FALSE, col.names = FALSE)
-}
-
-## Merge y_test.txt and y_train.txt
-merge_y <-function() {
+  
+  target_file <- file.path('combo','X.txt')
+  #write.table(X_combo, file = target_file, row.names = FALSE, col.names = FALSE)
+  write.table(X_combo, file = '', row.names = FALSE, col.names = FALSE)
   
 }
+
+
 
 ## Merge Inertial Signals files
 ## body_acc_x_test.txt with body_acc_x_train.txt
